@@ -14,6 +14,10 @@ export async function middleware(request: NextRequest) {
 
   const storageType = process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage';
 
+  if (storageType === 'localstorage' && !process.env.PASSWORD) {
+    return NextResponse.next();
+  }
+
   // 从cookie获取认证信息
   const authInfo = getAuthInfoFromCookie(request);
 
